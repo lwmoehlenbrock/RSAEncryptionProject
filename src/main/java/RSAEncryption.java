@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class RSAEncryption {
 
 
-    //I did this before realizing BigInteger had the BigInteger.ONE field etc.
+    //I did this before realizing BigInteger class had the BigInteger.ONE field etc.
     static BigInteger one = new BigInteger("1");
     static BigInteger two = new BigInteger("2");
     static BigInteger zero = new BigInteger("0");
@@ -170,6 +170,7 @@ public class RSAEncryption {
         return keys;
     }
 
+    //Encrypts a message and outputs the ciphertext as blocks of BigIntegers
     public static ArrayList<BigInteger> Encipher(String m, BigInteger e, BigInteger n){
         int numBytes = n.bitLength()/8;
         byte[] mBytes = m.getBytes(StandardCharsets.UTF_8);
@@ -193,6 +194,7 @@ public class RSAEncryption {
 
     }
 
+    //Decrypts ciphertext from an ArrayList of blocks that were originally enciphered with this program
     public static String Decipher(ArrayList<BigInteger> c, BigInteger d, BigInteger n){
 
         int numBytes = n.bitLength()/8;
@@ -209,6 +211,7 @@ public class RSAEncryption {
         return m;
     }
 
+    //generates a strong probable prime number less than 2^power
     public static BigInteger GeneratePrime(int power, int iterations){
         BigInteger upperLimit = new BigInteger("2").pow(power).subtract(new BigInteger("1"));
         BigInteger p = new BigInteger("2");
@@ -218,6 +221,7 @@ public class RSAEncryption {
         return p;
     }
 
+    //generates a strong probable prime number with the specified number of bits
     public static BigInteger GeneratePrimeGuaranteeBits(int power, int iterations){
         BigInteger upperLimit = new BigInteger("2").pow(power);
         BigInteger p = new BigInteger("2");
@@ -227,6 +231,7 @@ public class RSAEncryption {
         return p;
     }
 
+    //Wrapper function for performing k miller-rabin iterations for testing a number for primality
     public static boolean MillerRabin(BigInteger n, int k){
 
         for(int i = 0; i < k; i++){
@@ -275,6 +280,7 @@ public class RSAEncryption {
 
     }
 
+    //Generates a random number between the lower bound and upper bound
     public static BigInteger RandRange(BigInteger lowerBound, BigInteger upperBound){
 
         BigInteger randValue;
@@ -286,6 +292,8 @@ public class RSAEncryption {
         return randValue;
     }
 
+    //This method was just something I made when I was curious about composite numbers that would pass the miller-rabin test
+    //for a large number of bases, it doesn't really have any relevance to the project
     public static void MillerRabinCheck(int power, int iterations){
         BigInteger p;
         int counter = 0;
