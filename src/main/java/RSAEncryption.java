@@ -1,6 +1,8 @@
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,26 +15,136 @@ public class RSAEncryption {
     static BigInteger zero = new BigInteger("0");
 
     public static void main(String[] args) {
+        int n;
+        if(args[0].equals("k")){
+            System.out.println("test");
+            try {
+                n = Integer.parseInt(args[1]);
+                String fileName = args[2];
+                File keys = new File(fileName);
+                try{
+                    if(keys.createNewFile()){
+                        BigInteger[] generatedKeys = GenerateKeys(n);
+                        FileWriter keysWriter = new FileWriter(fileName);
+                        keysWriter.write("RSA Modulus: " + generatedKeys[0] + "\n");
+                        keysWriter.write("RSA Public Exponent: " + generatedKeys[1] + "\n");
+                        keysWriter.write("RSA Private Exponent: " + generatedKeys[2] + "\n");
+                        keysWriter.close();
+                    }
+                    else {
+                        System.out.println("File " + fileName + "already exists.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            catch(Exception e){
+                usage();
+            }
+        }
+        else if(args[0].equals("encrypt")){
+            String messageFileName = args[1];
+            String ciphertextFileName = args[2];
+            BigInteger publicKey = new BigInteger(args[3]);
+            BigInteger modulus = new BigInteger(args[4]);
+            String message;
+            try{
+                File cipherText = new File(ciphertextFileName);
+                BufferedReader br = new BufferedReader(new FileReader(messageFileName));
+                try {
+                    StringBuilder sb = new StringBuilder();
+                    String line = br.readLine();
 
-        //Generate a private/public key pair. keys[0] is n, keys[1] is e, and keys[2] is d
-        BigInteger[] keys = GenerateKeys(512);
-
-        String m = "Hello World! I guess for this to work I need to make sure this string is large enough or else it won't get broken down into smaller substrings. This should be the proper length I would assume... The only way to tell is if I add a lot more to this string so let me ramble. I'm glad I seem to have figured it out because for some reason converting from string to byte[] to BigInteger then doing the modular exponentiation then back to byte[] then back to string and so forth just was producing gibberish but this seems to be working! The number of bytes in this string is 739 which means it must be broken down 12 times for a 512 bit modulus. I guess the best way to tell would be to print out the size of the ArrayList returned by Encipher.";
-
-        //for making sure the Encipher method is breaking down the string into blocks properly
-        byte[] mByte = m.getBytes(StandardCharsets.UTF_8);
-        System.out.println(mByte.length);
-
-        //the ciphertext is output as an ArrayList of BigIntegers, each corresponding to a block of the original message
-        ArrayList<BigInteger> c = Encipher(m, keys[1], keys[0]);
-        System.out.println(c.size());
-        System.out.println(Decipher(c, keys[2], keys[0]));
-
-
+                    while (line != null) {
+                        sb.append(line);
+                        line = br.readLine();
+                    }
+                    message = sb.toString();
+                } finally {
+                    br.close();
+                }
+                try {
+                    if (cipherText.createNewFile()) {
+                        ArrayList<BigInteger> cipherTextBlocks = Encipher(message, publicKey, modulus);
+                        FileWriter cipherWriter = new FileWriter(cipherText);
+                        for(BigInteger i : cipherTextBlocks) {
+                            cipherWriter.write(i + "\n");
+                        }
+                        cipherWriter.close();
+                    } else {
+                        System.out.println("File " + ciphertextFileName + "already exists.");
+                    }
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }catch(Exception e){
+                usage();
+            }
+        }
+        else if(args[0].equals("decrypt")) {
+            String cipherFileName = args[1];
+            String messageFileName = args[2];
+            BigInteger privateKey = new BigInteger(args[3]);
+            BigInteger modulus = new BigInteger(args[4]);
+            String message;
+            ArrayList<BigInteger> ciphertextBlocks = new ArrayList<BigInteger>();
+            try {
+                File cipherText = new File(cipherFileName);
+                BufferedReader br = new BufferedReader(new FileReader(cipherFileName));
+                try {
+                    String line = br.readLine();
+                    while (line != null) {
+                        ciphertextBlocks.add(new BigInteger(line));
+                        line = br.readLine();
+                    }
+                } finally {
+                    br.close();
+                }
+                try {
+                    File messageText = new File(messageFileName);
+                    if (messageText.createNewFile()) {
+                        message = Decipher(ciphertextBlocks, privateKey, modulus);
+                        FileWriter messageWriter = new FileWriter(messageText);
+                        messageWriter.write(message);
+                        messageWriter.close();
+                    } else {
+                        System.out.println("File " + messageFileName + "already exists.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                usage();
+            }
+        }
+        else{
+            usage();
+        }
     }
 
     public static SecureRandom rng = new SecureRandom();
     public static BigInteger lastA = new BigInteger("2");
+
+    public static void usage(){
+        System.out.println("To generate a pair of RSA keys use the following arguments:");
+        System.out.println("java RSAEncryption keys n outputFile.txt");
+        System.out.println("n - number of bits for the desired RSA modulus");
+        System.out.println("outputFile - the name of the file that will be created to store the keys");
+        System.out.println("");
+        System.out.println("To encrypt a message use the following arguments:");
+        System.out.println("java RSAEncryption message.txt cipher.txt e n");
+        System.out.println("message - the name of the file containing the message to be encrypted");
+        System.out.println("cipher - the name of the file that will be created to store the ciphertext");
+        System.out.println("e - the public RSA key");
+        System.out.println("n - the RSA modulus");
+        System.out.println("");
+        System.out.println("To decrypt a message use the following arguments:");
+        System.out.println("java RSAEncryption cipher.txt message.txt d n");
+        System.out.println("cipher - the name of the file containing the ciphertext to be decrypted");
+        System.out.println("message - the name of the file that will be created to store the decrypted message");
+        System.out.println("d - the private RSA key");
+        System.out.println("n - the RSA modulus");
+    }
 
     //This was just a method I had for trying to find composite numbers that passed a certain number of miller rabin iterations, it's not important to the actual RSA implementation
     public static boolean PrimeChecker(BigInteger n){
