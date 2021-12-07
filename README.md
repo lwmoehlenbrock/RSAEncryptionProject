@@ -4,15 +4,25 @@ An RSA implementation created for my ECS 235 term project. This implementation i
 Compiling and usage:
 First, after downloading the code change directory to (directory where the project is)/RSAEncryptionProject/src/main/java and compile the program with: 
 javac RSAEncryption.java
+
 Then to generate a pair of keys use the following arguments:
+
 java RSAEncryption keys n outputFile.txt
+
 Where n is the desired number of bits for the RSA modulus and outputFile.txt is the name of the file that the program will create and write the public and private keys and the modulus.
+
 Then to encrypt a message use the following arguments:
+
 java RSAEncryption encrypt message.txt cipher.txt e n
+
 Where message.txt is the file containing the message you want to encrypt, cipher.txt is the file that will be created and will have the ciphertext written to it, e is the public exponent and n is the modulus.
+
 Then to decrypt a message use the following arguments:
+
 java RSAEncryption decrypt cipher.txt message.txt d n
+
 Where cipher.txt is the ciphertext that was created using the encrypt argument, message.txt is the file that will be created to store the decrypted message, d is the private exponent and n is the modulus.
+
 Unless a path is specified, the program will look for the existing text files in the /RSAEncryptionProject/src/main/java directory and will also create the output files in that directory.
 
 Below are screenshots showing the process of compiling, generating keys, encrypting a message, and decrypting the ciphertext:
