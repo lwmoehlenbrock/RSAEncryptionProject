@@ -16,7 +16,7 @@ public class RSAEncryption {
 
     public static void main(String[] args) {
         int n;
-        if(args[0].equals("k")){
+        if(args[0].equals("keys")){
             System.out.println("test");
             try {
                 n = Integer.parseInt(args[1]);
@@ -132,14 +132,14 @@ public class RSAEncryption {
         System.out.println("outputFile - the name of the file that will be created to store the keys");
         System.out.println("");
         System.out.println("To encrypt a message use the following arguments:");
-        System.out.println("java RSAEncryption message.txt cipher.txt e n");
+        System.out.println("java RSAEncryption encrypt message.txt cipher.txt e n");
         System.out.println("message - the name of the file containing the message to be encrypted");
         System.out.println("cipher - the name of the file that will be created to store the ciphertext");
         System.out.println("e - the public RSA key");
         System.out.println("n - the RSA modulus");
         System.out.println("");
         System.out.println("To decrypt a message use the following arguments:");
-        System.out.println("java RSAEncryption cipher.txt message.txt d n");
+        System.out.println("java RSAEncryption decrypt cipher.txt message.txt d n");
         System.out.println("cipher - the name of the file containing the ciphertext to be decrypted");
         System.out.println("message - the name of the file that will be created to store the decrypted message");
         System.out.println("d - the private RSA key");
