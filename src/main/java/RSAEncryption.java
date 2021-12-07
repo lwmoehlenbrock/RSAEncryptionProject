@@ -17,7 +17,6 @@ public class RSAEncryption {
     public static void main(String[] args) {
         int n;
         if(args[0].equals("keys")){
-            System.out.println("test");
             try {
                 n = Integer.parseInt(args[1]);
                 String fileName = args[2];
