@@ -17,8 +17,8 @@ Unless a path is specified, the program will look for the existing text files in
 
 Below are screenshots showing the process of compiling, generating keys, encrypting a message, and decrypting the ciphertext:
 
-Compiling the program:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/compile.PNG)
+
+![Compiling the program:](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/compile.PNG)
 
 message.txt has already been created, ready to encrypt once we generate some keys:
 !(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderaftercompile.PNG)
