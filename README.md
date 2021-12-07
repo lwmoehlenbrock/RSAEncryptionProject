@@ -17,31 +17,31 @@ Unless a path is specified, the program will look for the existing text files in
 
 Below are screenshots showing the process of compiling, generating keys, encrypting a message, and decrypting the ciphertext:
 
-
-![Compiling the program:](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/compile.PNG)
+Compiling the program:
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/compile.PNG)
 
 message.txt has already been created, ready to encrypt once we generate some keys:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderaftercompile.PNG)
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/message.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderaftercompile.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/message.PNG)
 
 Generating some keys:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/keys.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/keys.PNG)
 
 The file mykeys has been created in the current directory:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterkeys.PNG)
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/mykeys.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterkeys.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/mykeys.PNG)
 
 Now we use the public exponent and the modulus from mykeys.txt to encrypt message.txt:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/encrypt.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/encrypt.PNG)
 
 The file cipher.txt has been created in the current directory:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterencrypt.PNG)
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/cipher.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterencrypt.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/cipher.PNG)
 
 Now we use the private exponent and the modulus from mykeys.txt to decrypt cipher.txt:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/decrypt.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/decrypt.PNG)
 
 The file decryptedmessage.txt has been created in the current directory, and it matches the original message!:
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterdecrypt.PNG)
-!(https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/decryptedmessage.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/folderafterdecrypt.PNG)
+![](https://github.com/lwmoehlenbrock/RSAEncryptionProject/blob/master/decryptedmessage.PNG)
 
